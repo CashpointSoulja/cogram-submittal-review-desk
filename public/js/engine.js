@@ -139,7 +139,7 @@ export function checkSpec(s) {
     if (!r.comparable) {
       out.push(finding('S2', 'major', c.id, `No usable value for ${c.title.toLowerCase()}`, `Clause ${c.id} needs ${req.prop} ${req.op} ${shown}${unit}; the submittal declares ${actual === undefined ? 'nothing' : `"${actual}"`}.`, [c.id]));
     } else if (!r.ok) {
-      out.push(finding('S1', req.severity, c.id, `${c.title}: ${actual}${unit} does not meet ${shown}${unit}`, `Declared ${req.prop} = ${actual}${unit}. Clause ${c.id} requires ${req.op} ${shown}${unit}.`, [c.id], { actual, expected: req.value, op: req.op }));
+      out.push(finding('S1', req.severity, c.id, `${c.title}: ${actual}${unit} does not meet ${shown}${unit}`, `Declared ${req.prop} = ${actual}${unit}. Clause ${c.id} requires ${req.op} ${shown}${unit}.`, [c.id], { actual, expected: req.value, op: req.op, calc: `${req.prop} = ${actual}; test ${req.prop} ${req.op} ${Array.isArray(req.value) ? JSON.stringify(req.value) : req.value} → false` }));
     } else {
       out.push(pass('S1', c.id, `${c.title}: ${actual}${unit} meets ${shown}${unit}`, [c.id]));
     }

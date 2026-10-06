@@ -1,0 +1,13 @@
+{
+  "name": "cogram-submittal-review-desk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Submittal Review Desk: an independent concept by Ayo Ahmed. Static site, no dependencies.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "evals": "node scripts/run-evals.js",
+    "serve": "python3 -m http.server 4173 --directory public"
+  },
+  "license": "UNLICENSED"
+}

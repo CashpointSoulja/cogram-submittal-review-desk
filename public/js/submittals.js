@@ -5,7 +5,7 @@ const docs = (...types) => types.map((type) => ({ type }));
 export const SUBMITTALS = [
   {
     id: 'HY-SUB-G20-001', title: 'Glulam beams and columns L1–L4', section: 'G20', package: 'G20-GLULAM-FRAME',
-    revision: 'A', submittedOn: '2027-01-04', status: 'incoming', company: 'Fellmoor Timber Engineering',
+    revision: 'A', submittedOn: '2027-01-04', status: 'incoming', company: 'Fellwood Timber Engineering',
     activity: 'A-210', leadTimeWeeks: 10,
     clauses: ['G20/210', 'G20/220', 'G20/230', 'G20/240', 'G20/010'],
     properties: { strengthClass: 'GL24h', moistureContentPct: 12 },
@@ -157,7 +157,7 @@ export const SUBMITTALS = [
   },
   {
     id: 'HY-SUB-G20-002', title: 'Glulam connection steelwork', section: 'G20', package: 'G20-CONNECTIONS',
-    revision: 'A', submittedOn: '2027-01-08', status: 'incoming', company: 'Fellmoor Timber Engineering',
+    revision: 'A', submittedOn: '2027-01-08', status: 'incoming', company: 'Fellwood Timber Engineering',
     activity: 'A-210', leadTimeWeeks: 6,
     clauses: ['G20/230', 'G20/250', 'G20/260'],
     properties: { finish: 'HDG BS EN ISO 1461' },

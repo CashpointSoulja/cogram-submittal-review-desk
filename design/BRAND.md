@@ -73,7 +73,7 @@ Dark theme (hero, footer): background `#0a0a0a`, card `#1a1a1a`, border `#ffffff
 | Footer | `#0a0a0a` background, `#f0f2ed` text, 96px vertical padding |
 | Docs (GitBook) | white canvas, left nav with icons, Inter typeface, slate-blue active link (the docs are on GitBook's theme, not the marketing system) |
 
-Kanban column names on the live product mockup: **Received · With Consultants · In Our Court · Issued**. Those are Cogram's real lanes. This concept adds review outcomes (Approved / Rejected / Revise & Resubmit) as the brief asks, and documents the mapping in `docs/VIABILITY.md`.
+Kanban column names on the live product mockup: **Received · With Consultants · In Our Court · Issued**. Those are Cogram's real lanes. This concept adds review outcomes (Approved / Rejected / Revise & Resubmit) as the brief asks, and documents the mapping in `VIABILITY.md`.
 
 Icons are Heroicons-style 24px outline at stroke 1.5 (calendar, refresh, chevron, phone).
 

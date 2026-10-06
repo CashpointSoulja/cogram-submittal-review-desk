@@ -8,6 +8,8 @@ import { timeSaved, burndown, firstPass, readyForReview, TIME_MODEL } from './me
 import { shortDate, longDate } from './dates.js';
 
 const STORE = 'srd-state-v1';
+// The demo runs on the synthetic project date, with the real time of day.
+const nowISO = () => `${PROJECT.today}T${new Date().toISOString().slice(11)}`;
 const TEST_RUN = { total: 205, pass: 205, fail: 0, suites: 17, command: 'npm test' };
 const $main = document.getElementById('main');
 const $ev = document.getElementById('evidence');
@@ -361,11 +363,11 @@ function doResolve(id, key, action) {
   const flag = TRIAGED[id].flags.find((f) => f.key === key);
   const note = state.drafts[`${id}|${key}`] || '';
   try {
-    state.resolutions[id] = resolveFlag(state.resolutions[id] || {}, flag, action, note);
+    state.resolutions[id] = resolveFlag(state.resolutions[id] || {}, flag, action, note, nowISO());
   } catch (err) { toast(err.message); focusDraft(id, key); return; }
   if (s.status === 'incoming') {
     const next = startReview(s); Object.assign(s, next);
-    pushEvents(auditEvent(new Date().toISOString(), PROJECT.reviewer, 'status.change', id, 'in-review', '', 'Incoming → In Review'));
+    pushEvents(auditEvent(nowISO(), PROJECT.reviewer, 'status.change', id, 'in-review', '', 'Incoming → In Review'));
   }
   pushEvents(resolutionEvent(s, flag, state.resolutions[id][key], PROJECT.reviewer));
   delete state.drafts[`${id}|${key}`];
@@ -378,7 +380,7 @@ function doDecide(id) {
   const s = sub(id);
   const d = state.decision[id] || {};
   try {
-    const next = applyDecision(s, TRIAGED[id].flags, state.resolutions[id] || {}, d.choice, d.rationale || '', PROJECT.reviewer);
+    const next = applyDecision(s, TRIAGED[id].flags, state.resolutions[id] || {}, d.choice, d.rationale || '', PROJECT.reviewer, nowISO());
     Object.assign(s, next);
   } catch (err) { toast(err.message); return; }
   pushEvents(decisionEvent(s, s.review));
@@ -396,9 +398,9 @@ function download(name, text, type) {
 }
 function doExport(fmt) {
   const evs = filteredEvents();
-  const stamp = new Date().toISOString().slice(0, 10);
+  const stamp = nowISO().slice(0, 10);
   if (fmt === 'csv') download(`holloway-yard-audit-${stamp}.csv`, toCSV(evs), 'text/csv');
-  else download(`holloway-yard-audit-${stamp}.json`, toJSON(evs, { project: PROJECT.name, exportedAt: new Date().toISOString(), filter: { submittal: state.auditFilter, event: state.auditType } }), 'application/json');
+  else download(`holloway-yard-audit-${stamp}.json`, toJSON(evs, { project: PROJECT.name, exportedAt: nowISO(), filter: { submittal: state.auditFilter, event: state.auditType } }), 'application/json');
   toast(`Exported ${evs.length} events as ${fmt.toUpperCase()}`);
 }
 
@@ -413,7 +415,7 @@ document.addEventListener('click', (e) => {
   else if (a === 'undo') {
     const id = el.dataset.id; const key = el.dataset.key;
     state.resolutions[id] = clearResolution(state.resolutions[id] || {}, key);
-    pushEvents(auditEvent(new Date().toISOString(), PROJECT.reviewer, 'flag.undo', id, key.replace(':', ' '), '', 'Resolution withdrawn'));
+    pushEvents(auditEvent(nowISO(), PROJECT.reviewer, 'flag.undo', id, key.replace(':', ' '), '', 'Resolution withdrawn'));
     save(); render({ keepScroll: true });
   } else if (a === 'choose') {
     const id = el.dataset.id; state.decision[id] = { ...(state.decision[id] || { rationale: '' }), choice: el.dataset.v };
